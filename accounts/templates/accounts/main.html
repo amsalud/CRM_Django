@@ -6,11 +6,9 @@
     <title>CRM Django</title>
 </head>
 <body>
-    <h1>Navbar</h1>
-    <hr>
+    {% include 'accounts/navbar.html' %}
     {% block content %} 
     {% endblock%}
-    <hr>
-    <h5>Our Footer</h5>
+    {% include 'accounts/footer.html' %}
 </body>
 </html>
