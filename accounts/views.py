@@ -30,6 +30,7 @@ def customer(request, customer_id):
 
     context = {
         'customer': customer,
-        'orders': orders
+        'orders': orders,
+        'total_orders': orders.count()
     }
     return render(request, 'accounts/customer.html', context)
