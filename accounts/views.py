@@ -73,3 +73,13 @@ def deleteOrder(request, id):
 
     context = { 'item': order }
     return render(request, 'accounts/delete.html', context)
+
+def deleteCustomer(request, id):
+    customer = Customer.objects.get(id=id)
+
+    if request.method == 'POST':
+        customer.delete()
+        return redirect('/')
+
+    context = { 'item': customer }
+    return render(request, 'accounts/delete.html', context)
