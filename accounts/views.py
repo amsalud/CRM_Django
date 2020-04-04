@@ -38,7 +38,7 @@ def customer(request, customer_id):
     return render(request, 'accounts/customer.html', context)
 
 def createOrder(request, customer_id):
-    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'))
+    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=10)
     customer = Customer.objects.get(id=customer_id)
     formset = OrderFormSet(instance=customer)
 
