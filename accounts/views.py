@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from .models import *
 from .forms import OrderForm
+from .filters import OrderFilter
 
 # Create your views here.
 
@@ -32,10 +33,14 @@ def customer(request, customer_id):
     customer = Customer.objects.get(id=customer_id)
     orders = customer.order_set.all()
 
+    myFilter = OrderFilter(request.GET, queryset=orders)
+    orders = myFilter.qs
+
     context = {
         'customer': customer,
         'orders': orders,
-        'total_orders': orders.count()
+        'total_orders': orders.count(),
+        'myFilter': myFilter
     }
     return render(request, 'accounts/customer.html', context)
 
