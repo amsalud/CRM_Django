@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from .forms import OrderForm
@@ -37,7 +37,14 @@ def customer(request, customer_id):
     return render(request, 'accounts/customer.html', context)
 
 def createOrder(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
     context = {
         'form': OrderForm()
     }
+
     return render(request, 'accounts/order_form.html', context)
