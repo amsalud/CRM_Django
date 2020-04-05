@@ -1,5 +1,7 @@
 <h1>Signup Page</h1>
 
 <form action="" method="POST">
-    {{form}}
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" name="Create User">
 </form>
