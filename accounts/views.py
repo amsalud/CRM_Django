@@ -11,6 +11,10 @@ def signup(request):
     context = {}
     return render(request, 'accounts/signup.html', context)
 
+def login(request):
+    context = {}
+    return render(request, 'accounts/login.html', context)
+
 def home(request):
     orders = Order.objects.all()
     customers = Customer.objects.all()
