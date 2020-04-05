@@ -13,34 +13,39 @@ from .filters import OrderFilter
 # Create your views here.
 
 def signup(request):
-    form  = SignupForm()
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        form  = SignupForm()
+        if request.method == 'POST':
+            form = SignupForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, 'Account was created for ' + user)
+                return redirect('login')
 
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get('username')
-            messages.success(request, 'Account was created for ' + user)
-            return redirect('login')
-
-    context = { 'form': form}
-    return render(request, 'accounts/signup.html', context)
+        context = { 'form': form}
+        return render(request, 'accounts/signup.html', context)
 
 def signin(request):
-    context = {}
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home')
-        else:
-            messages.info(request, 'Invalid Credentials')
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        context = {}
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-    context = {}
-    return render(request, 'accounts/login.html', context)
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.info(request, 'Invalid Credentials')
+
+        return render(request, 'accounts/login.html', context)
 
 def signout(request):
     logout(request)
