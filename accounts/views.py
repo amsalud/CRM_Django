@@ -7,6 +7,10 @@ from .filters import OrderFilter
 
 # Create your views here.
 
+def signup(request):
+    context = {}
+    return render(request, 'accounts/signup.html', context)
+
 def home(request):
     orders = Order.objects.all()
     customers = Customer.objects.all()
