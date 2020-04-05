@@ -71,6 +71,11 @@ def home(request):
     return render(request, 'accounts/dashboard.html', context)
 
 @login_required(login_url='login')
+def profile(request):
+    context = {}
+    return render(request, 'accounts/profile.html', context)
+
+@login_required(login_url='login')
 def products(request):
     products = Product.objects.all()
     return render(request, 'accounts/products.html', {'products': products})
