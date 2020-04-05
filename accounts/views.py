@@ -4,6 +4,7 @@ from django.forms import inlineformset_factory
 from .models import *
 from .forms import OrderForm, SignupForm
 from .filters import OrderFilter
+from django.contrib import messages
 
 # Create your views here.
 
@@ -14,6 +15,8 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, 'Account was created for ' + user)
             return redirect('login')
 
     context = { 'form': form}
