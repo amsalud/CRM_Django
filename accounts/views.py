@@ -41,6 +41,10 @@ def signin(request):
     context = {}
     return render(request, 'accounts/login.html', context)
 
+def signout(request):
+    logout(request)
+    return redirect('login')
+
 def home(request):
     orders = Order.objects.all()
     customers = Customer.objects.all()
