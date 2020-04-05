@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+
 from .models import *
 from .forms import OrderForm, SignupForm
 from .filters import OrderFilter
-from django.contrib import messages
+
 
 # Create your views here.
 
@@ -22,7 +25,19 @@ def signup(request):
     context = { 'form': form}
     return render(request, 'accounts/signup.html', context)
 
-def login(request):
+def signin(request):
+    context = {}
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.info(request, 'Invalid Credentials')
+
     context = {}
     return render(request, 'accounts/login.html', context)
 
