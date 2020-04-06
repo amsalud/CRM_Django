@@ -23,6 +23,7 @@ urlpatterns = [
     path('login/', views.signin, name="login"),
     path('logout/', views.signout, name="logout"),
     path('profile/', views.profile, name="profile"),
+    path('profile_settings/', views.profileSettings, name="profile_settings"),
     path('products/', views.products, name="products"),
     path('customer/<str:customer_id>/', views.customer, name="customer"),
     path('create_order/<str:customer_id>', views.createOrder, name="create_order"),
