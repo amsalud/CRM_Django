@@ -93,8 +93,8 @@ def profile(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['customer'])
 def profileSettings(request):
-    user = request.user
-    form = CustomerForm(instance=user)
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
     context = {'form': form}
     return render(request, 'accounts/profile_settings.html', context)
 
