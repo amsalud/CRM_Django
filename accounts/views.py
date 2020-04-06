@@ -8,7 +8,7 @@ from django.contrib import messages
 from .models import *
 from .forms import OrderForm, SignupForm
 from .filters import OrderFilter
-from .decorators import unauthenticated_user
+from .decorators import unauthenticated_user, allowed_users
 
 
 # Create your views here.
@@ -46,6 +46,7 @@ def signout(request):
     return redirect('login')
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def home(request):
     orders = Order.objects.all()
     customers = Customer.objects.all()
